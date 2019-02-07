@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import NavigationBar from '../components/RegisteredPersonsList/AppBar'
 import PersonsList from '../components/RegisteredPersonsList/PersonsList'
+import AddPersonModal from '../components/RegisteredPersonsList/AddPersonModal'
+
 import { withStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
@@ -24,6 +26,10 @@ class RegisteredPersonsList extends Component {
         <NavigationBar />
 
         <PersonsList />
+
+        <AddPersonModal 
+          isOpen
+        />
 
         <Fab className={classes.fab} color="secondary">
           <AddIcon />
