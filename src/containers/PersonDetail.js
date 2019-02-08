@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button'
 
 import NavigationBar from '../components/PersonDetail/AppBar'
 import AmountHistory from '../components/PersonDetail/AmountHistory'
+import AddAmountModal from '../components/PersonDetail/AddAmountModal'
 
 const styles = theme => ( {
   content: {
@@ -39,6 +40,10 @@ class PersonDetail extends Component {
             Agregar Pago
           </Button>
         </div>
+
+        <AddAmountModal 
+          isOpen
+        />
         
       </div>
     )
