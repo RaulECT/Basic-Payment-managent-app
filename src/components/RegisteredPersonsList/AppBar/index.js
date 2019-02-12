@@ -103,6 +103,7 @@ const NavigationBar = props => {
 
             <InputBase 
               placeholder="Buscar..."
+              onChange={ e => { props.onSearch(e.target.value) } }
               classes={{
                 root: classes.inputInput,
                 input: classes.inputInput

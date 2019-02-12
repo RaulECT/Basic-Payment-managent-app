@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add'
 
 const styles = theme => ( {
   fab: {
-    position: 'absolute',
+    position: 'fixed',
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2
   }
@@ -44,12 +44,23 @@ class RegisteredPersonsList extends Component {
     } )
   }
 
+  onSearch = value => {
+    const personsFiltered = this.state.persons.filter( person => {
+      const valueLowerCase = value.toLowerCase()
+      const nameLowerCase = person.name.toLowerCase()
+
+      return nameLowerCase.includes( valueLowerCase )
+    } )
+
+    this.setState( { personsFiltered } )
+  }
+
   render() {
     const { classes } = this.props
 
     return(
       <div>
-        <NavigationBar />
+        <NavigationBar onSearch={ this.onSearch } />
 
         <PersonsList 
           data={ this.state.personsFiltered }
