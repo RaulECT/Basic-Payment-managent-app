@@ -16,10 +16,23 @@ const styles = theme => ( {
   }
 } )
 
+const fakeData = [
+  { id:'1', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'2', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'3', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'4', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'5', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'6', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'7', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+  { id:'8', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
+]
+
 class RegisteredPersonsList extends Component {
 
   state = {
-    isModalOpen: false
+    isModalOpen: false,
+    persons: fakeData,
+    personsFiltered: fakeData
   }
 
   handleAddModal = () => {
@@ -38,7 +51,9 @@ class RegisteredPersonsList extends Component {
       <div>
         <NavigationBar />
 
-        <PersonsList />
+        <PersonsList 
+          data={ this.state.personsFiltered }
+        />
 
         <AddPersonModal 
           isOpen={ this.state.isModalOpen }
