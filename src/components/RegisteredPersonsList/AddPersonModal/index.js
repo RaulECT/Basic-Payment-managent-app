@@ -60,7 +60,7 @@ const styles = theme => ({
   }
 })
 
-const AddPersonModal = ( { isOpen, classes, onClose } ) => {
+const AddPersonModal = ( { isOpen, classes, onClose, onCreate } ) => {
 
   return (
     <Modal
@@ -79,9 +79,11 @@ const AddPersonModal = ( { isOpen, classes, onClose } ) => {
         
         <form
           className={classes.container}
+          onSubmit={ onCreate }
         >
           <TextField 
             id="person-name"
+            name="personName"
             label="Nombre"
             className={classes.textField}
             margin="normal"
@@ -94,6 +96,7 @@ const AddPersonModal = ( { isOpen, classes, onClose } ) => {
             <InputLabel htmlFor="first-amount">Primer Pago</InputLabel>
             <Input 
               id="first-amount"
+              name="firstAmount"
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
             />
           </FormControl>
@@ -116,6 +119,7 @@ const AddPersonModal = ( { isOpen, classes, onClose } ) => {
             variant="contained" 
             color="primary"
             className={ classes.button }
+            type="submit"
           >
             Agregar
           </Button>

@@ -55,6 +55,12 @@ class RegisteredPersonsList extends Component {
     this.setState( { personsFiltered } )
   }
 
+  onAddPerson = e => {
+    e.preventDefault()
+  
+    const { personName, firstAmount, transport } = e.target
+  }
+
   render() {
     const { classes } = this.props
 
@@ -69,6 +75,7 @@ class RegisteredPersonsList extends Component {
         <AddPersonModal 
           isOpen={ this.state.isModalOpen }
           onClose={ this.handleAddModal }
+          onCreate={ this.onAddPerson }
         />
 
         <Fab 
