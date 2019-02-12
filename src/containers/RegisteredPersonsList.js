@@ -18,6 +18,19 @@ const styles = theme => ( {
 
 class RegisteredPersonsList extends Component {
 
+  state = {
+    isModalOpen: false
+  }
+
+  handleAddModal = () => {
+    this.setState( prevState => {
+      return {
+        ...prevState,
+        isModalOpen: !prevState.isModalOpen
+      }
+    } )
+  }
+
   render() {
     const { classes } = this.props
 
@@ -28,10 +41,15 @@ class RegisteredPersonsList extends Component {
         <PersonsList />
 
         <AddPersonModal 
-          isOpen
+          isOpen={ this.state.isModalOpen }
+          onClose={ this.handleAddModal }
         />
 
-        <Fab className={classes.fab} color="secondary">
+        <Fab 
+          className={classes.fab} 
+          color="secondary"
+          onClick={ this.handleAddModal }
+        >
           <AddIcon />
         </Fab>
       </div>

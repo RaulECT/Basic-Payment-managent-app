@@ -60,14 +60,14 @@ const styles = theme => ({
   }
 })
 
-const AddPersonModal = ( { isOpen, classes } ) => {
+const AddPersonModal = ( { isOpen, classes, onClose } ) => {
 
   return (
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
       open={isOpen}
-      onClose={ () => {} }
+      onClose={ onClose }
     >
       <div
         className={classes.paper}
@@ -119,7 +119,7 @@ const AddPersonModal = ( { isOpen, classes } ) => {
           >
             Agregar
           </Button>
-          <Button>Cancelar</Button>
+          <Button onClick={ onClose }>Cancelar</Button>
         </form>
       </div>
     </Modal>
