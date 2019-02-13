@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import moment from 'moment'
+import firebase from 'firebase'
 
 import NavigationBar from '../components/RegisteredPersonsList/AppBar'
 import PersonsList from '../components/RegisteredPersonsList/PersonsList'
@@ -7,6 +9,7 @@ import AddPersonModal from '../components/RegisteredPersonsList/AddPersonModal'
 import { withStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
+import Snackbar from '@material-ui/core/Snackbar'
 
 const styles = theme => ( {
   fab: {
@@ -16,23 +19,21 @@ const styles = theme => ( {
   }
 } )
 
-const fakeData = [
-  { id:'1', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'2', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'3', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'4', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'5', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'6', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'7', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-  { id:'8', name: 'John Doe', totalAmount: 200, lastAmoun: '9 Marzo del 2019' },
-]
-
 class RegisteredPersonsList extends Component {
 
   state = {
     isModalOpen: false,
-    persons: fakeData,
-    personsFiltered: fakeData
+    isSnackBarOpen: false,
+    persons: [],
+    personsFiltered: []
+  }
+
+  componentDidMount() {
+    
+  }
+
+  closeSnackBar = () => {
+    this.setState( { isSnackBarOpen: false } )
   }
 
   handleAddModal = () => {
@@ -57,8 +58,26 @@ class RegisteredPersonsList extends Component {
 
   onAddPerson = e => {
     e.preventDefault()
-  
-    const { personName, firstAmount, transport } = e.target
+
+    const { personName, firstAmount, transport } = e.target 
+    const newPerson = {
+      totalAmount: parseInt(firstAmount.value),
+      amounts: [{
+        amount: parseInt(firstAmount.value),
+        date: moment().format('LLL')
+      }],
+      transport: transport.value,
+      personName: personName.value,
+    } 
+
+    firebase.database().ref('persons').push().set( newPerson )
+      .then( data => {
+        this.setState( {
+          isSnackBarOpen: true,
+          isModalOpen: false,
+        } )
+      } )
+
   }
 
   render() {
@@ -85,6 +104,16 @@ class RegisteredPersonsList extends Component {
         >
           <AddIcon />
         </Fab>
+
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          open={this.state.isSnackBarOpen}
+          onClose={this.closeSnackBar}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Se ha agregado una nueva persona.</span>}
+        />
       </div>
     )
   }
