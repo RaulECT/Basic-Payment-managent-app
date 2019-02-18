@@ -29,7 +29,21 @@ class RegisteredPersonsList extends Component {
   }
 
   componentDidMount() {
-    
+    firebase.database().ref('persons').on( 'value', ( snapshot ) => {
+      if( !snapshot.val() ) return false
+
+      const data = []
+      const keys = Object.keys( snapshot.val() )
+
+      for (let index = 0; index < keys.length; index++) {
+        data.push( snapshot.val()[ keys[index] ] )
+      }
+
+      this.setState( { 
+        persons: data,
+        personsFiltered: data
+       } )
+    } )
   }
 
   closeSnackBar = () => {
@@ -67,7 +81,7 @@ class RegisteredPersonsList extends Component {
         date: moment().format('LLL')
       }],
       transport: transport.value,
-      personName: personName.value,
+      name: personName.value,
     } 
 
     firebase.database().ref('persons').push().set( newPerson )
