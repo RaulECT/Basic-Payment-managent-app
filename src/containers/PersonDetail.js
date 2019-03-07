@@ -50,7 +50,9 @@ class PersonDetail extends Component {
       date: moment().format('LLL')
     } )
     console.log( person )
+    personUpdated.lastAmount = moment().format('LLL')
     personUpdated.totalAmount = this.calulateNewTotal( personUpdated.amounts )
+    
     firebase.database().ref(`persons/${ person.id }`).set( personUpdated )
 
     this.setState( { 

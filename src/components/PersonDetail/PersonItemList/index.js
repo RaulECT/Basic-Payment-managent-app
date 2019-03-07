@@ -22,7 +22,7 @@ const personItemList = ( { person, onSelect } ) => {
         color="textSecondary"
         variant="body1"
       >
-        { `Ultimo Pago: ${person.lastAmoun}` }
+        { `Ultimo Pago: ${person.lastAmount}` }
       </Typography>
     </Fragment>
   )

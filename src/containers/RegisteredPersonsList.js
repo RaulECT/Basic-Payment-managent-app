@@ -92,6 +92,7 @@ class RegisteredPersonsList extends Component {
       }],
       transport: transport.value,
       name: personName.value,
+      lastAmount: moment().format('LLL')
     } 
 
     firebase.database().ref('persons').push().set( newPerson )
