@@ -50,11 +50,21 @@ class PersonDetail extends Component {
       date: moment().format('LLL')
     } )
     console.log( person )
+    personUpdated.totalAmount = this.calulateNewTotal( personUpdated.amounts )
+    firebase.database().ref(`persons/${ person.id }`).set( personUpdated )
 
     this.setState( { 
       person: personUpdated,
       isAddAmounModalOpen: false
      } )
+  }
+
+  calulateNewTotal = amounts => {
+    let newAmount = 0
+
+    amounts.map( amount => newAmount = newAmount + amount.amount )
+
+    return newAmount
   }
 
   render() {
