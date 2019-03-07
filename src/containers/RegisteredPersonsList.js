@@ -36,7 +36,10 @@ class RegisteredPersonsList extends Component {
       const keys = Object.keys( snapshot.val() )
 
       for (let index = 0; index < keys.length; index++) {
-        data.push( snapshot.val()[ keys[index] ] )
+        
+        const dataSnap = snapshot.val()[ keys[index] ]
+        dataSnap.id = keys[index]
+        data.push( dataSnap )
       }
 
       this.setState( { 
@@ -68,6 +71,13 @@ class RegisteredPersonsList extends Component {
     } )
 
     this.setState( { personsFiltered } )
+  }
+
+  onSelectPerson = person => {
+    this.props.history.push( {
+      pathname: '/person/edit',
+      state: { person }
+    } )
   }
 
   onAddPerson = e => {
@@ -103,6 +113,7 @@ class RegisteredPersonsList extends Component {
 
         <PersonsList 
           data={ this.state.personsFiltered }
+          onSelect={ this.onSelectPerson }
         />
 
         <AddPersonModal 

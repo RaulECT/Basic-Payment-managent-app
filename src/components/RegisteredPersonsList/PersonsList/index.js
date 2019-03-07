@@ -15,7 +15,7 @@ const styles = theme => ({
 
 const PersonsList = props => {
   const { classes } = props
-  const persons = props.data.map( person => <PersonListItem person={person} /> )
+  const persons = props.data.map( person => <PersonListItem onSelect={ props.onSelect } person={person} /> )
   
   return(
     <List className={ classes.root }>

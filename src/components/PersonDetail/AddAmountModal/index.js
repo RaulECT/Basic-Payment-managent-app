@@ -54,14 +54,14 @@ const styles = theme => ( {
   }
 } )
 
-const AddAmountModal = ( { isOpen, classes } ) => {
+const AddAmountModal = ( { isOpen, classes, onCancel, onSubmit } ) => {
 
   return(
     <Modal
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
       open={isOpen}
-      onClose={ () => {} }
+      onClose={ onCancel }
     >
       <div
         className={ classes.paper }
@@ -76,6 +76,7 @@ const AddAmountModal = ( { isOpen, classes } ) => {
 
         <form
           className={ classes.container }
+          onSubmit={ onSubmit }
         >
           <FormControl
             fullWidth
@@ -84,6 +85,7 @@ const AddAmountModal = ( { isOpen, classes } ) => {
             <InputLabel htmlFor="new-amount">Nuevo Pago</InputLabel>
             <Input 
               id="new-amount"
+              name="amount"
               startAdornment={<InputAdornment position="start">$</InputAdornment>}
             />
           </FormControl>
@@ -91,11 +93,12 @@ const AddAmountModal = ( { isOpen, classes } ) => {
           <Button
             variant="contained"
             color="primary"
+            type="submit"
             className={ classes.button }
           >
             Agregar
           </Button>
-          <Button>Cancelar</Button>
+          <Button onClick={ onCancel }>Cancelar</Button>
         </form>
       </div>
     </Modal>

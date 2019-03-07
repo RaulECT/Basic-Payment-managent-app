@@ -6,7 +6,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider'
 
-const personItemList = ( { person } ) => {
+const personItemList = ( { person, onSelect } ) => {
   const nameSplitted = person.name.split( ' ' )
   const avataraAbreviation = nameSplitted.length === 2 ? `${nameSplitted[0][0]}${nameSplitted[1][0]}` : nameSplitted[0][0]
   const text = (
@@ -29,7 +29,7 @@ const personItemList = ( { person } ) => {
 
   return (
     <Fragment>
-      <ListItem key={ person.id }>
+      <ListItem key={ person.id } onClick={ () => { onSelect( person ) } } >
         <Avatar>{ avataraAbreviation.toUpperCase() }</Avatar>
         <ListItemText 
           primary={person.name}

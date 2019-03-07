@@ -24,7 +24,7 @@ const styles = theme => ( {
 } )
 
 const NavigationBar = props => {
-  const { classes } = props
+  const { classes, title, onBack } = props
 
   return(
     <div className={ classes.root }>
@@ -34,6 +34,7 @@ const NavigationBar = props => {
             className={ classes.backButton }
             color="inherit"
             aria-label="Open drawer"
+            onClick={ onBack }
           >
             <ArrowBack />
           </IconButton>
@@ -44,7 +45,7 @@ const NavigationBar = props => {
             color="inherit"
             noWrap
           >
-            John Doe
+            { title }
           </Typography>
         </Toolbar>
       </AppBar>

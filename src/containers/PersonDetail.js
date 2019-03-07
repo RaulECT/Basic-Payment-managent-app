@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import moment from 'moment'
+import firebase from 'firebase'
+
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
@@ -16,33 +19,83 @@ const styles = theme => ( {
 
 class PersonDetail extends Component {
 
+  state = {
+    isAddAmounModalOpen: false,
+    person: null
+  }
+
+  componentDidMount() {
+    if ( this.props.location.state ) {
+      this.setState( { person: this.props.location.state.person } )
+    }
+  }
+
+  handleAddAmountModal = () => {
+    this.setState( pervState => {
+      return {
+        isAddAmounModalOpen: !pervState.isAddAmounModalOpen
+      }
+    } )
+  }
+
+  onAddAmount = e => {
+    e.preventDefault()
+
+    const { person } = this.state
+    const amounts = [ ...person.amounts ]
+    const personUpdated = { ...person }
+
+    personUpdated.amounts = amounts.concat( {
+      amount: parseInt(e.target.amount.value),
+      date: moment().format('LLL')
+    } )
+    console.log( person )
+
+    this.setState( { 
+      person: personUpdated,
+      isAddAmounModalOpen: false
+     } )
+  }
+
   render() {
     const { classes } = this.props
+    const { isAddAmounModalOpen, person } = this.state
+    let title = person ? person.name : ''
+    let totalAmount = person ? person.totalAmount : ''
+    let amounts = person ? person.amounts : []
 
     return(
       <div>
-        <NavigationBar />
+        <NavigationBar 
+          title={ title } 
+          onBack={ this.props.history.goBack }
+        />
 
         <div className={ classes.content }>
           <Typography 
             component="h4" 
             variant="h4"
           >
-            Total pagado: $375
+            Total pagado: ${ totalAmount }
           </Typography>
 
-          <AmountHistory />
+          <AmountHistory
+            amounts={ amounts }
+          />
 
           <Button 
             color="primary"
             variant="contained"
+            onClick={ this.handleAddAmountModal }
           >
             Agregar Pago
           </Button>
         </div>
 
         <AddAmountModal 
-          isOpen
+          isOpen={ isAddAmounModalOpen }
+          onCancel={ this.handleAddAmountModal }
+          onSubmit={ this.onAddAmount }
         />
         
       </div>

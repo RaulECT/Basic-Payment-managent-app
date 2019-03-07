@@ -15,21 +15,19 @@ const styles = theme => ( {
 } )
 
 const AmountList = props => {
-  const { classes } = props
+  const { classes, amounts } = props
+  const list = amounts.map( amount => (
+    <ListItem key={ amount.date }>
+      <ListItemText
+        primary={ `Abono de $${amount.amount}` }
+        secondary={ amount.date }
+      />
+    </ListItem>
+  ) )
 
   return (
     <List className={ classes.root }>
-      <ListItem>
-        <ListItemText primary="Abono de $100" secondary="Fecha: 12-03-2019" />
-      </ListItem>
-      
-      <ListItem>
-        <ListItemText primary="Abono de $100" secondary="Fecha: 12-03-2019" />
-      </ListItem>
-      
-      <ListItem>
-        <ListItemText primary="Abono de $100" secondary="Fecha: 12-03-2019" />
-      </ListItem>
+      { list }
     </List>
   )
 }
