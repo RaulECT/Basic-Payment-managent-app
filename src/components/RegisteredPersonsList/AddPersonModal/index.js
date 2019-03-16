@@ -12,6 +12,9 @@ import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Button from '@material-ui/core/Button'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormHelperText from '@material-ui/core/FormHelperText'
 
 const getModalStyle = () => {
   const top = 50
@@ -57,10 +60,13 @@ const styles = theme => ({
   },
   button: {
     marginRight: 10
+  },
+  selectEmpty: {
+    marginTop: theme.spacing.unit * 2
   }
 })
 
-const AddPersonModal = ( { isOpen, classes, onClose, onCreate } ) => {
+const AddPersonModal = ( { isOpen, classes, onClose, onCreate, type, onChangeType } ) => {
 
   return (
     <Modal
@@ -88,6 +94,26 @@ const AddPersonModal = ( { isOpen, classes, onClose, onCreate } ) => {
             className={classes.textField}
             margin="normal"
           />
+
+          <FormControl
+            fullWidth
+          >
+            <InputLabel htmlFor="incription-type">
+              Tipo de Inscripción
+            </InputLabel>
+            <Select
+              value={ type }
+              input={<Input name="incription-type" id="incription-type" />}
+              displayEmpty
+              name="incription-type"
+              onChange={ onChangeType }
+            >
+              <MenuItem value="1">1</MenuItem>
+              <MenuItem value="2">2</MenuItem>
+              <MenuItem value="3">3</MenuItem>
+              <MenuItem value="4">4</MenuItem>
+            </Select> 
+          </FormControl>
 
           <FormControl 
             fullWidth 

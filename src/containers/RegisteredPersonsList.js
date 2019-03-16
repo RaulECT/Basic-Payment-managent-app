@@ -25,7 +25,8 @@ class RegisteredPersonsList extends Component {
     isModalOpen: false,
     isSnackBarOpen: false,
     persons: [],
-    personsFiltered: []
+    personsFiltered: [],
+    typeSelected: 1,
   }
 
   componentDidMount() {
@@ -105,6 +106,12 @@ class RegisteredPersonsList extends Component {
 
   }
 
+  onChangeType = event => {
+    this.setState( {
+      typeSelected: event.target.value
+    } )
+  }
+
   render() {
     const { classes } = this.props
 
@@ -121,6 +128,8 @@ class RegisteredPersonsList extends Component {
           isOpen={ this.state.isModalOpen }
           onClose={ this.handleAddModal }
           onCreate={ this.onAddPerson }
+          type={ this.state.typeSelected }
+          onChangeType={ this.onChangeType }
         />
 
         <Fab 
