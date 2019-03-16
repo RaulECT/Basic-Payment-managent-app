@@ -15,7 +15,14 @@ const personItemList = ( { person, onSelect } ) => {
         color="textSecondary"
         variant="body1"
       >
-        { `Total Pagado: $${person.totalAmount}` }
+        { `Saldo a liquidar: $${ person.amountToPay - person.totalAmount}` }
+      </Typography>
+      
+      <Typography 
+        color="textSecondary"
+        variant="body1"
+      >
+        { `Tipo: ${ person.inscriptionType}` }
       </Typography>
       
       <Typography 

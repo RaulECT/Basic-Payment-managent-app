@@ -28,6 +28,7 @@ class RegisteredPersonsList extends Component {
     persons: [],
     personsFiltered: [],
     typeSelected: 0,
+    snapshot: {}
   }
 
   componentDidMount() {
@@ -46,7 +47,8 @@ class RegisteredPersonsList extends Component {
 
       this.setState( { 
         persons: data,
-        personsFiltered: data
+        personsFiltered: data,
+        snapshot: snapshot.val()
        } )
     } )
   }
@@ -78,7 +80,7 @@ class RegisteredPersonsList extends Component {
   onSelectPerson = person => {
     this.props.history.push( {
       pathname: '/person/edit',
-      state: { person }
+      state: { person, onDelete: this.onDelete }
     } )
   }
 
@@ -104,7 +106,7 @@ class RegisteredPersonsList extends Component {
       isFullPage: type.title === 'De 0 a 5 años' ? true : amountToPay === amount ? true : false,
       
     } 
-
+  
     firebase.database().ref('persons').push().set( newPerson )
       .then( data => {
         this.setState( {
@@ -119,6 +121,13 @@ class RegisteredPersonsList extends Component {
   onChangeType = event => {
     this.setState( {
       typeSelected: event.target.value
+    } )
+  }
+
+  onDelete = id => {
+    firebase.database().ref('persons').child( id ).remove()
+    .then( data => {
+      this.props.history.push( '/' )
     } )
   }
 
