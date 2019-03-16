@@ -15,6 +15,7 @@ import Button from '@material-ui/core/Button'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
 import FormHelperText from '@material-ui/core/FormHelperText'
+import inscriptionsTypes from '../../../types'
 
 const getModalStyle = () => {
   const top = 50
@@ -25,6 +26,10 @@ const getModalStyle = () => {
     left: `${left}%`,
     transform: `translate(-${top}%, -${left}%)`
   }
+}
+
+const rendeTypesOptions = () => {
+  return inscriptionsTypes.map( type => <MenuItem key={`opt_${type.id}`} value={ type.id } >{type.title}</MenuItem> )
 }
 
 const styles = theme => ({
@@ -67,6 +72,7 @@ const styles = theme => ({
 })
 
 const AddPersonModal = ( { isOpen, classes, onClose, onCreate, type, onChangeType } ) => {
+  const typesOptions = rendeTypesOptions()
 
   return (
     <Modal
@@ -108,10 +114,7 @@ const AddPersonModal = ( { isOpen, classes, onClose, onCreate, type, onChangeTyp
               name="incription-type"
               onChange={ onChangeType }
             >
-              <MenuItem value="1">1</MenuItem>
-              <MenuItem value="2">2</MenuItem>
-              <MenuItem value="3">3</MenuItem>
-              <MenuItem value="4">4</MenuItem>
+              {typesOptions}
             </Select> 
           </FormControl>
 

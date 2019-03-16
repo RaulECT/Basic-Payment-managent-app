@@ -5,6 +5,7 @@ import firebase from 'firebase'
 import NavigationBar from '../components/RegisteredPersonsList/AppBar'
 import PersonsList from '../components/RegisteredPersonsList/PersonsList'
 import AddPersonModal from '../components/RegisteredPersonsList/AddPersonModal'
+import inscriptionsTypes from '../types'
 
 import { withStyles } from '@material-ui/core';
 import Fab from '@material-ui/core/Fab'
@@ -26,7 +27,7 @@ class RegisteredPersonsList extends Component {
     isSnackBarOpen: false,
     persons: [],
     personsFiltered: [],
-    typeSelected: 1,
+    typeSelected: 0,
   }
 
   componentDidMount() {
@@ -84,16 +85,24 @@ class RegisteredPersonsList extends Component {
   onAddPerson = e => {
     e.preventDefault()
 
+    const { typeSelected } = this.state
+    const type = inscriptionsTypes[ typeSelected ]
     const { personName, firstAmount, transport } = e.target 
+    const amount = isNaN( parseInt(firstAmount.value) ) ? 0 : parseInt(firstAmount.value)
+    const amountToPay = transport.value === 'true' ? parseInt(type.withTransportPrice) : parseInt(type.withoutTransportPrice)
     const newPerson = {
-      totalAmount: parseInt(firstAmount.value),
+      totalAmount: amount,
       amounts: [{
-        amount: parseInt(firstAmount.value),
+        amount: amount,
         date: moment().format('LLL')
       }],
       transport: transport.value,
       name: personName.value,
-      lastAmount: moment().format('LLL')
+      lastAmount: moment().format('LLL'),
+      inscriptionType: type.title,
+      amountToPay: amountToPay,
+      isFullPage: type.title === 'De 0 a 5 años' ? true : amountToPay === amount ? true : false,
+      
     } 
 
     firebase.database().ref('persons').push().set( newPerson )
@@ -101,6 +110,7 @@ class RegisteredPersonsList extends Component {
         this.setState( {
           isSnackBarOpen: true,
           isModalOpen: false,
+          typeSelected: 0
         } )
       } )
 
